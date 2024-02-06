@@ -46,13 +46,13 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
 
       <div className="px-5 pt-3 pb-6 border-b border-solid border-secondary">
         <h1 className="text-xl font-bold">{barbershop.name}</h1>
-        <div className="flex item-center gap-1 mt-2">
+        <div className="flex item-center gap-2 mt-2">
           <MapPinIcon className="text-primary" size={18} />
           <p className="text-sm">{barbershop.address}</p>
         </div>
-        <div className="flex item-center gap-1 mt-2">
+        <div className="flex item-center gap-2 mt-2">
           <StarIcon className="text-primary" size={18} />
-          <p className="text-sm">5,0 {barbershop.address}</p>
+          <p className="text-sm">5,0 (889 avaliações)</p>
         </div>
       </div>
     </div>
