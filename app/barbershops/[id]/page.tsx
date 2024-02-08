@@ -11,7 +11,9 @@ interface BarbershopDetailsPageProps {
   }
 }
 
-const BarbershopDetailsPage = async ({params}: BarbershopDetailsPageProps) => {
+const BarbershopDetailsPage = async ({
+  params
+}: BarbershopDetailsPageProps) => {
   const session = await getServerSession(authOptions)
 
   if (!params.id) {
@@ -48,6 +50,7 @@ const BarbershopDetailsPage = async ({params}: BarbershopDetailsPageProps) => {
             key={service.id}
             service={service}
             isAuthenticated={!!session?.user}
+            barbershop={barbershop}
           />
         ))}
       </div>
