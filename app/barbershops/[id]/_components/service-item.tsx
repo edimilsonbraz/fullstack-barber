@@ -44,18 +44,18 @@ const ServiceItem = ({
   const [dayBookings, setDayBookings] = useState<Booking[]>([])
 
   useEffect(() => {
-    if(!date) {
+    if (!date) {
       return
     }
 
     const refreshAvailableHours = async () => {
-      const _dayBookings = await getDayBookings(date)
+      const _dayBookings = await getDayBookings(barbershop.id, date)
 
       setDayBookings(_dayBookings)
     }
 
     refreshAvailableHours()
-  }, [date])
+  }, [barbershop, date])
 
   const handleDateClick = (date: Date | undefined) => {
     setDate(date)
@@ -95,14 +95,14 @@ const ServiceItem = ({
       setSheetIsOpen(false)
       setHour(undefined)
       setDate(undefined)
-      toast("Reserva realizada com sucesso!", {
+      toast('Reserva realizada com sucesso!', {
         description: format(newDate, "'Para' dd 'de' MMMM 'as' HH':'mm'.'", {
-          locale: ptBR,
+          locale: ptBR
         }),
         action: {
-          label: "Visualizar",
-          onClick: () => router.push("/bookings")
-        },
+          label: 'Visualizar',
+          onClick: () => router.push('/bookings')
+        }
       })
     } catch (error) {
       console.error(error)
@@ -112,29 +112,28 @@ const ServiceItem = ({
   }
 
   const timeList = useMemo(() => {
-    if(!date) {
+    if (!date) {
       return []
     }
 
-    return generateDayTimeList(date).filter(time => {
+    return generateDayTimeList(date).filter((time) => {
       // time: "09:00"
       //Se houver alguma reserva em "dayBookings" com a hora e minutos igual a time, incluir
-      const timeHour = Number(time.split(":")[0])
-      const timeMinutes = Number(time.split(":")[1])
+      const timeHour = Number(time.split(':')[0])
+      const timeMinutes = Number(time.split(':')[1])
 
-      const booking = dayBookings.find(booking => {
+      const booking = dayBookings.find((booking) => {
         const bookingHour = booking.date.getHours()
         const bookingMinutes = booking.date.getMinutes()
 
         return bookingHour === timeHour && bookingMinutes === timeMinutes
       })
 
-      if(!booking) {
+      if (!booking) {
         return true
       }
 
       return false
-
     })
   }, [date, dayBookings])
 
