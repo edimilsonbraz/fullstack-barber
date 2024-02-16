@@ -47,14 +47,18 @@ export default async function Home() {
       </div>
 
       <div className="px-5 mt-6">
-        <h2 className="text-sm font-bold text-gray-400 uppercase mb-3">
-          Último Agendamentos
-        </h2>
+        {booking && (
+          <>
+            <h2 className="text-sm font-bold text-gray-400 uppercase mb-3">
+              Último Agendamento
+            </h2>
 
-        {/* TODO: Chamar o ultimo agendamento no banco */}
-        <div className="">
-          {booking && <BookingItem booking={booking as any} />}
-        </div>
+            {/* TODO: Chamar o ultimo agendamento no banco */}
+            <div className="">
+              {booking && <BookingItem booking={booking as any} />}
+            </div>
+          </>
+        )}
       </div>
 
       <div className="mt-6">
