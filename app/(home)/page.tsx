@@ -10,25 +10,30 @@ import { authOptions } from '../_lib/auth'
 
 
 export default async function Home() {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
-  const [barbershops, booking] = await Promise.all([
+  const [barbershops, recommendedBarbershops, confirmedBookings] = await Promise.all([
     db.barbershop.findMany({}),
+    db.barbershop.findMany({
+      orderBy: {
+        id: "asc",
+      },
+    }),
     session?.user
-      ? db.booking.findFirst({
+      ? db.booking.findMany({
           where: {
-            userId: (session?.user as any).id,
+            userId: (session.user as any).id,
             date: {
-              gte: new Date()
-            }
+              gte: new Date(),
+            },
           },
           include: {
             service: true,
-            barbershop: true
-          }
+            barbershop: true,
+          },
         })
-      : Promise.resolve([])
-  ])
+      : Promise.resolve([]),
+  ]);
 
   return (
     <div>
@@ -36,13 +41,11 @@ export default async function Home() {
 
       <div className="px-5 pt-5">
         <h2 className="text-xl font-bold">
-          {session?.user
-            ? `Olá ${session.user.name?.split(' ')[0]}`
-            : 'Olá, vamos agendar um corte hoje ?'}
+          {session?.user ? `Olá, ${session.user.name?.split(" ")[0]}!` : "Olá! Vamos agendar um corte hoje?"}
         </h2>
-        <p className="capitalize">
+        <p className="capitalize text-sm">
           {format(new Date(), "EEEE',' dd 'de' MMMM", {
-            locale: ptBR
+            locale: ptBR,
           })}
         </p>
       </div>
@@ -51,29 +54,25 @@ export default async function Home() {
         <Search />
       </div>
 
-      <div className="px-5 mt-6">
-        {booking && (
+      <div className="mt-6">
+        {confirmedBookings.length > 0 && (
           <>
-            <h2 className="text-sm font-bold text-gray-400 uppercase mb-3">
-              Último Agendamento
-            </h2>
-
-            {/* TODO: Chamar o ultimo agendamento no banco */}
-            <div className="">
-              {booking && <BookingItem booking={booking as any} />}
+            <h2 className="pl-5 text-xs mb-3 uppercase text-gray-400 font-bold">Agendamentos</h2>
+            <div className="px-5 flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+              {confirmedBookings.map((booking) => (
+                <BookingItem key={booking.id} booking={booking} />
+              ))}
             </div>
           </>
         )}
       </div>
 
       <div className="mt-6">
-        <h2 className="text-sm px-5 font-bold text-gray-400 uppercase mb-3">
-          Recomendados
-        </h2>
+        <h2 className="px-5 text-xs mb-3 uppercase text-gray-400 font-bold">Recomendados</h2>
 
-        <div className="flex gap-1 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+        <div className="flex px-5 gap-8 overflow-x-auto [&::-webkit-scrollbar]:hidden">
           {barbershops.map((barbershop) => (
-            <div key={barbershop.id} className="px-4">
+            <div key={barbershop.id} className="min-w-[167px] max-w-[167px]">
               <BarbershopItem key={barbershop.id} barbershop={barbershop} />
             </div>
           ))}
@@ -81,18 +80,16 @@ export default async function Home() {
       </div>
 
       <div className="mt-6 mb-[4.5rem]">
-        <h2 className="text-sm px-5 font-bold text-gray-400 uppercase mb-3">
-          Populares
-        </h2>
+        <h2 className="px-5 text-xs mb-3 uppercase text-gray-400 font-bold">Populares</h2>
 
-        <div className="flex gap-1 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-          {barbershops.map((barbershop) => (
-            <div key={barbershop.id} className="px-4">
+        <div className="flex px-5 gap-8 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+          {recommendedBarbershops.map((barbershop) => (
+            <div key={barbershop.id} className="min-w-[167px] max-w-[167px]">
               <BarbershopItem key={barbershop.id} barbershop={barbershop} />
             </div>
           ))}
         </div>
       </div>
     </div>
-  )
+  );
 }

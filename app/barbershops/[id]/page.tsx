@@ -44,7 +44,7 @@ const BarbershopDetailsPage = async ({
         <Button variant="outline">Informações</Button>
       </div>
 
-      <div className="flex flex-col gap-4 px-5">
+      <div className="flex flex-col gap-4 px-5 mb-10">
         {barbershop.services.map((service) => (
           <ServiceItem
             key={service.id}
