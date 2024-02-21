@@ -34,6 +34,7 @@ const BarbershopItem = ({ barbershop }: BarbershopItemProps) => {
             src={barbershop.imageUrl}
             alt={barbershop.name}
             fill
+            sizes='auto'
             className="rounded-2xl object-cover"
           />
         </div>
