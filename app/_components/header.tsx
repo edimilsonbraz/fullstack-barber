@@ -15,8 +15,8 @@ const Header = () => {
 
   return (
     <header>
-      <Card className="">
-        <CardContent className="p-5 flex flex-row  justify-between items-center lg:container">
+      <Card className="lg:w-full">
+        <CardContent className="p-5 flex flex-row  justify-between items-center lg:container lg:pl-12 lg:pr-12">
           <Link href={'/'}>
             <Image src="/logo.png" alt="FSW Barber" width={120} height={22} />
           </Link>
