@@ -174,17 +174,20 @@ const ServiceItem = ({
                     <SheetTitle>Fazer Reserva</SheetTitle>
                   </SheetHeader>
 
-                  <div className="py-6">
-                    <Calendar
+                  <div className="py-6 w-full">
+                    <Calendar   
                       mode="single"
                       selected={date}
                       onSelect={handleDateClick}
                       fromDate={new Date()}
                       locale={ptBR}
                       styles={{
+                        month: {
+                          width: '100%'
+                        },
                         head_cell: {
-                          width: '100%',
-                          textTransform: 'capitalize'
+                          textTransform: 'capitalize',
+                          width: '100%'
                         },
                         cell: {
                           width: '100%'
