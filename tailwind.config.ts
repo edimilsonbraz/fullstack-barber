@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      backgroundImage: {
+        'map-background': 'url(/barbershop-map.png)'
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

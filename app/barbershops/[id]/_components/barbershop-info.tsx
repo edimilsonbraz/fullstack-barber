@@ -16,7 +16,7 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
   const router = useRouter()
 
   const handleBackClick = () => {
-    router.replace("/")
+    router.replace('/')
   }
 
   return (
@@ -51,7 +51,7 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
           src={barbershop.imageUrl}
           fill
           alt={barbershop.name}
-          className="object-cover opacity-75"
+          className="object-cover opacity-75 rounded-lg"
         />
       </div>
 
