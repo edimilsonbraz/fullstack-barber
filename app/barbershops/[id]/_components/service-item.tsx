@@ -267,6 +267,7 @@ const ServiceItem = ({
 
                   <SheetFooter className="px-5">
                     <Button
+                      className='w-full'
                       onClick={handleBookingSubmit}
                       disabled={!hour || !date || submitIsLoading}
                     >

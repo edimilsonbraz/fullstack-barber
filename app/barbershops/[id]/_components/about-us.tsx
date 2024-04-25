@@ -33,7 +33,7 @@ const AboutUs = ({ barbershop }: BarbershopInfoProps) => {
         <div className="mt-5">
           <h2 className="uppercase font-bold">Sobre nós</h2>
           <p className="mt-5 text-justify">
-            Bem-vindo à Vintage Barber, onde tradição encontra estilo. Nossa
+            Bem-vindo à <span className='font-bold text-primary'>{barbershop.name}</span>, onde tradição encontra estilo. Nossa
             equipe de mestres barbeiros transforma cortes de cabelo e barbas em
             obras de arte. Em um ambiente acolhedor, promovemos confiança,
             estilo e uma comunidade unida.
